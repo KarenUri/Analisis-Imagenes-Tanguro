@@ -4,7 +4,7 @@ library(ggplot2)
 library(tools)
 
 #Directorio
-data_dir <- setwd("D:/Karen/Documents/GitHub/Analisis-Imagenes-Tanguro/raw_data/plot_profiles/March_22/Sac")
+data_dir <- setwd("C:/Users/Karen/OneDrive - Universidad Nacional de Colombia/Documentos/Documentos 2025-1/Pasantia/PlotProfile/March_22/Arreglos")
 
 for (csv_path in list.files(pattern = "\\.csv$", full.names = TRUE)) {
   
@@ -34,3 +34,4 @@ for (csv_path in list.files(pattern = "\\.csv$", full.names = TRUE)) {
     plot = p, width = 7, height = 4, dpi = 300
   )
 }
+
