@@ -28,17 +28,31 @@ rename(image+"_vessels2");
 vessels_mask_blue_title=getTitle();
 selectWindow(vessels_mask_blue_title);
 
-
 run("Gamma...", "value=2");
 setAutoThreshold("Minimum dark stack");
 
-run("Analyze Particles...", "size=0.0005-Infinity circularity=0.10-1.00 show=Masks display summarize in_situ");
+run("Analyze Particles...", "size=1200-Infinity circularity=0.005-1.0 show=Masks display summarize in_situ");
 run("Fill Holes");
-run("EDM Binary Operations", "iterations=4 operation=close");
-run("EDM Binary Operations", "iterations=2 operation=dilate");
+for (i = 0; i < 4; i++) run("Close-");
+for (i = 0; i < 2; i++) run("Dilate");
 run("Fill Holes");
 
 run("Set Measurements...", "area centroid perimeter fit shape feret's area_fraction display redirect=None decimal=3");
-run("Analyze Particles...", "size=0.0005-Infinity circularity=0.10-1.00 show=Overlay display summarize add");
+run("Analyze Particles...", "size=1200-Infinity circularity=0.005-1.0 show=Masks display summarize in_situ");
 
+poresMaskTitle = getTitle();
 
+selectImage(image); 
+
+run("Duplicate...", "title=fibras ignore");
+duplicatedTitle = getTitle(); 
+
+imageCalculator("Subtract create", duplicatedTitle, poresMaskTitle);
+resultTitle = "Result of " + duplicatedTitle;
+selectWindow(resultTitle);
+
+run("32-bit");
+
+setAutoThreshold("Minimum dark no-reset");
+
+run("NaN Background");
